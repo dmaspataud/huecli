@@ -17,9 +17,18 @@ var (
 		"DEFAULT": [2]float32{0.4571, 0.4097},
 		"RED":     [2]float32{0.6915, 0.3083},
 		"GREEN":   [2]float32{0, 1},
-		"BLUE":    [2]float32{0.1440, 0.0296},
+		"BLUE":    [2]float32{0.1440, 0.0297},
 	}
 	confTemplate = []byte("BridgeIP =\nBridgeToken =\n")
+	usage        = `Usage: huecli [option] [args]
+	
+Options:
+
+  status
+  color
+  brightness
+  on
+  off`
 )
 
 // Config structure contain decoded conf.toml data.
@@ -40,8 +49,8 @@ func main() {
 	}
 
 	if len(os.Args) < 2 {
-		fmt.Println("Placeholder : Print usage.")
-		os.Exit(1)
+		fmt.Println(usage)
+		os.Exit(0)
 	}
 	if os.Args[1] == "off" && len(os.Args) >= 3 {
 		switchOff(parseLights(os.Args[2:], bridge))
@@ -125,9 +134,9 @@ func setBrightness(target []hue.Light, percent int) {
 // function to show current lights status
 func getStatus(bridge *hue.Bridge) {
 	allLights := getLights(bridge)
-	fmt.Println("  LIGHT		 ON	")
+	fmt.Printf("%-15s %-15s\n", "LIGHT", "ON")
 	for _, eachLight := range allLights {
-		fmt.Printf("  %v	%v	\n", eachLight.Name, eachLight.State.On)
+		fmt.Printf("%-15v %-15v\n", eachLight.Name, eachLight.State.On)
 	}
 }
 

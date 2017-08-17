@@ -134,9 +134,14 @@ func setBrightness(target []hue.Light, percent int) {
 // function to show current lights status
 func getStatus(bridge *hue.Bridge) {
 	allLights := getLights(bridge)
-	fmt.Printf("%-15s %-15s\n", "LIGHT", "ON")
+	fmt.Printf("%-15s %-15s\n", "LIGHT", "STATE")
 	for _, eachLight := range allLights {
-		fmt.Printf("%-15v %-15v\n", eachLight.Name, eachLight.State.On)
+		if eachLight.State.On == true {
+			fmt.Printf("%-15v %-15v\n", eachLight.Name, "\x1b[32;1mON\x1b[0m")
+		} else {
+			fmt.Printf("%-15v %-15v\n", eachLight.Name, "\x1b[31;1mOFF\x1b[0m")
+		}
+
 	}
 }
 

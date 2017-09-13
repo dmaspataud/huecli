@@ -12,23 +12,26 @@ import (
 )
 
 var (
-	configFile = strings.Join([]string{os.Getenv("HOME"), "/.huecli"}, "")
+	configFile = strings.Join([]string{os.Getenv("HOME"), "/.config/huecli"}, "")
 	colorList  = map[string][2]float32{
 		"DEFAULT": [2]float32{0.4571, 0.4097},
 		"RED":     [2]float32{0.6915, 0.3083},
-		"GREEN":   [2]float32{0, 1},
-		"BLUE":    [2]float32{0.1440, 0.0297},
+		"GREEN":   [2]float32{0.0139, 0.7502},
+		"BLUE":    [2]float32{0.1096, 0.0868},
+		"PURPLE":  [2]float32{0.1611, 0.0138},
+		"ORANGE":  [2]float32{0.5752, 0.4242},
+		"YELLOW":  [2]float32{0.5125, 0.4866},
 	}
 	confTemplate = []byte("BridgeIP =\nBridgeToken =\n")
 	usage        = `Usage: huecli [option] [args]
 	
 Options:
 
-  status
-  color
-  brightness
-  on
-  off`
+  status : Give a status of current lights bound to the bridge.
+  color : Set the color of the targeted light.
+  brightness : Set the brightness of the targeted lights.
+  on : Switch the targeted lights on.
+  off : Switch the targeted lights off.`
 )
 
 // Config structure contain decoded conf.toml data.

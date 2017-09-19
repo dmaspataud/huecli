@@ -51,32 +51,27 @@ func main() {
 		fmt.Println("Could not authenticate with Hue Bridge :", err)
 	}
 
-	if len(os.Args) < 2 {
-		fmt.Println(usage)
-		os.Exit(0)
-	}
 	if os.Args[1] == "off" && len(os.Args) >= 3 {
 		switchOff(parseLights(os.Args[2:], bridge))
-	}
-	if os.Args[1] == "on" && len(os.Args) >= 3 {
+	} else if os.Args[1] == "on" && len(os.Args) >= 3 {
 		switchOn(parseLights(os.Args[2:], bridge))
-	}
-	if os.Args[1] == "color" && len(os.Args) >= 4 {
+	} else if os.Args[1] == "color" && len(os.Args) >= 4 {
 		inputColor := strings.ToUpper(os.Args[2])
 		if _, ok := colorList[inputColor]; ok {
 			setColor(parseLights(os.Args[3:], bridge), colorList[inputColor])
 		}
-	}
-	if os.Args[1] == "brightness" && len(os.Args) >= 4 {
+	} else if os.Args[1] == "brightness" && len(os.Args) >= 4 {
 		// os.Args[2] <= 100 && os.Args[2] >= 0
 		inputBrightness, err := strconv.Atoi(os.Args[2])
 		if err != nil {
 			fmt.Printf("Could not interpret brightness value %v : %v.\n", os.Args[2], err)
 		}
 		setBrightness(parseLights(os.Args[3:], bridge), inputBrightness)
-	}
-	if os.Args[1] == "status" {
+	} else if os.Args[1] == "status" {
 		getStatus(bridge)
+	} else {
+		fmt.Println(usage)
+		os.Exit(0)
 	}
 }
 
@@ -144,7 +139,6 @@ func getStatus(bridge *hue.Bridge) {
 		} else {
 			fmt.Printf("%-15v %-15v\n", eachLight.Name, "\x1b[31;1mOFF\x1b[0m")
 		}
-
 	}
 }
 
